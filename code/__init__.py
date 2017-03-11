@@ -1,1 +1,1 @@
-from .concatenate import concatenate
+from .textAnalizer import textAnalizer

@@ -7,37 +7,31 @@ from .context import code
 
 class CoreTestSuite(unittest.TestCase):
 
-
-    def test_concatenate(self):
-        # SET-UP
+    '''def test_libreriaTextos(self):
         str1 = 'hola'
         str2 = 'hola'
 
-        # EXECUTION
-        result = code.concatenate(str1, str2)
+        result = code.libreriaTextos()
 
-        # ASSERT
-        self.assertEqual(result, 'holahola', "El resultado no es el esperado")
+        self.assertEqual(code.libreriaTextos(), 'hola')
+    '''
+
+
 
 #https://docs.python.org/2/library/errno.html
 
-    def test_concatenate_check_args_arent_strings(self):
-        self.assertEqual(code.concatenate(True, 2), errno.EINVAL)
+    def test_textAnalizer_check_argument_is_string(self):
+        test = code.textAnalizer('hola')
+        self.assertEqual(test.checkImput(), 'hola')
 
-    def test_concatenate_check_args_are_strings(self):
-        self.assertEqual(code.concatenate('hola', 'hola'), 'holahola')
+    def test_textAnalizer_check_argument_is_bool(self):
+        test = code.textAnalizer(True)
+        self.assertEqual(test.checkImput(), errno.EINVAL)
 
-    def test_concatenate_check_whitespaces(self):
-        self.assertEqual(code.concatenate('pr ueb a', 'es paci o'), 'pruebaespacio', "El resultado no es el esperado")
+    def test_textAnalizer_check_argument_is_int(self):
+        test = code.textAnalizer(1)
+        self.assertEqual(test.checkImput(), errno.EINVAL)
 
-    def test_concatenate_string_with_more_than_ten_characters(self):
-        self.assertEqual(code.concatenate('moreThanTenCharacters', '<10Chars'), errno.EINVAL)
-
-    def test_concatenate_one_string(self):
-        self.assertEqual(code.concatenate('hola'), errno.EPERM)
-
-    def test_concatenate_more_than_ten_strings(self):
-        self.assertEqual(code.concatenate('h', 'o', 'l', 'a', ', ', 'q', 'u', 'e', 't', 'a', 'l'), errno.E2BIG)
 
 
 if __name__ == '__main__':

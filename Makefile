@@ -5,5 +5,5 @@ test:
 	nosetests tests
 
 coverage:
-	coverage run code/concatenate.py
+	coverage run code/textAnalizer.py
 	coverage report -m
