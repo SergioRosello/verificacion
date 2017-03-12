@@ -3,52 +3,54 @@ import errno
 import re
 import nltk
 import sys
-class textAnalizer(object):
+
+
+class TextAnalyzer(object):
 
 
     def __init__(self, text):
         self._text = text
 
-    def textAnalizer(self):
-        self.checkInput()
-        parsedinput = self.parseInput()
-        sortedinput = self.sortInput(parsedinput)
-        self.printresult(sortedinput)
+    def text_analizer(self):
+        self.check_input()
+        parsed_input = self.parse_input()
+        sorted_input = self.sort_input(parsed_input)
+        self.print_result(sorted_input)
 
-    def checkInput(self):
+    def check_input(self):
         if type(self.text) is str:
             return str(self.text)
         else:
             return errno.EINVAL
 
-    def parseInput(self):
+    def parse_input(self):
         nltk.download("stopwords")
         from nltk.corpus import stopwords
         from unidecode import unidecode
         #elimina los signos especiales
-        textUnicode = unicode(self.text,'utf-8','ignore')
+        text_unicode = unicode(self.text,'utf-8','ignore')
 
-        self.text = unidecode(textUnicode)
+        self.text = unidecode(text_unicode)
         self.text = (self.text).lower()
 
         #Borra la puntuacion y devuelve una lista de grupos con las palabras que aparecen en el texto.
         words = re.findall(r'\w+', self.text, flags=re.UNICODE | re.LOCALE)
 
-        parsedText = []
+        parsed_text = []
         for word in words:
             if word not in stopwords.words('spanish'):
-                parsedText.append(word)
+                parsed_text.append(word)
 
-        return parsedText
+        return parsed_text
 
     @classmethod
-    def sortInput(self, list):
+    def sort_input(self, list):
         from collections import Counter
         result = Counter(list)
         return result
 
     @classmethod
-    def printresult(self, result):
+    def print_result(self, result):
         for w in sorted(result, key=result.get, reverse=True):
             print w, result[w]
 
@@ -61,5 +63,5 @@ class textAnalizer(object):
         self._text = text
 
 if __name__ == "__main__":
-    analizer = textAnalizer(sys.argv[1])
-    analizer.textAnalizer()
+    analizer = TextAnalyzer(sys.argv[1])
+    analizer.text_analizer()
