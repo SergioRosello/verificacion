@@ -1,1 +1,1 @@
-from .textAnalizer import textAnalizer
+from .text_analizer import TextAnalyzer
