@@ -2,6 +2,7 @@
 import errno
 import re
 import nltk
+import sys
 class textAnalizer(object):
 
 
@@ -60,5 +61,5 @@ class textAnalizer(object):
         self._text = text
 
 if __name__ == "__main__":
-    analizer = textAnalizer('HólA me llamo Sergio y teNgo sergio hola una guitárra hola')
+    analizer = textAnalizer(sys.argv[1])
     analizer.textAnalizer()
