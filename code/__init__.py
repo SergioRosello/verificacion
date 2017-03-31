@@ -1,4 +1,4 @@
-from text_analizer import TextAnalyzer
+from text_analyzer import TextAnalyzer
 from db_connection import DBConnection
 import sys
 import pymongo
