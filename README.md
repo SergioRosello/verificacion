@@ -1,2 +1,2 @@
-# verificacionOpcional
-Compliacion de ejercicios opcionales hechos en clase de verificacion
+# verificacion
+Proyecto global verificacion.
