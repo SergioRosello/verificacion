@@ -7,6 +7,7 @@ import pymongo
 if __name__ == "__main__":
     analyzer = TextAnalyzer(sys.argv[1])
     phrase = analyzer.text_analyzer()
-    DBConnection.save_in_database(phrase)
-    DBConnection.query()
+    dbconnection = DBConnection()
+    dbconnection.save_in_database(phrase)
+    dbconnection.query()
     print DBConnection.next_result()
