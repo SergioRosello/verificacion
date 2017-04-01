@@ -10,4 +10,4 @@ if __name__ == "__main__":
     dbconnection = DBConnection()
     dbconnection.save_in_database(phrase)
     dbconnection.query()
-    print DBConnection.next_result()
+    print dbconnection.next_result()
