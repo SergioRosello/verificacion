@@ -38,13 +38,15 @@ class DBConnection:
             return errno.EINVAL
 
     def query(self):
-        result = self.db.scrapper.find({'_id': False})
+        result = self.db.scrapper.find({},{'_id': False})
         for x in result:
             self.query_result.append(x)
         self.indice = 0
         return self.query_result
 
     def next_result(self):
+        print self.indice
+        print len(self.query_result)
         if self.indice < len(self.query_result):
             return_value = self.query_result[self.indice]
             self.indice += 1
