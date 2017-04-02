@@ -5,44 +5,51 @@ import errno
 
 
 class DBConnection:
-    client = None
-    query_result = None
+    mongo_info = 'mongodb://localhost:27017/'
+    db_name = 'scrapper'
+    query_result = []
+    indice = 0
 
-    @staticmethod
-    def db_connect():
-        DBConnection.client = MongoClient('localhost', 27017)
-        collection = DBConnection.client.scrapper.scrapper
-        return collection
+    def __init__(self):
+        self.client = MongoClient(self.mongo_info)
+        self.db = self.client[self.db_name]
 
-    @staticmethod
-    def db_close():
-        DBConnection.client.close()
-
-    @staticmethod
-    def save_in_database(list_of_arguments):
-        collection = DBConnection.db_connect()
-        try:
-            collection.insert_one({'frase': list_of_arguments})
-            print "Successful"
-        except errors.ConnectionFailure as e:
-            print "Something went wrong: " % e
-
-        DBConnection.db_close()
-
-
-    @staticmethod
-    def query(list_of_instructions=None):
-        collection = DBConnection.db_connect()
-        result = collection.find(list_of_instructions)
-        DBConnection.db_close()
-        DBConnection.query_result = result
-
-    @staticmethod
-    def next_result():
-        if DBConnection.query_result.alive:
+    def save_in_database(self, list_of_arguments):
+        if type(list_of_arguments) is (list or dict):
             try:
-                return DBConnection.query_result.next()
-            except StopIteration:
-                return errno.EBADRQC
+                output_id = None
+                if not self.is_in_database(list_of_arguments):
+                    output_id = self.db.scrapper.insert_one({'frase': list_of_arguments}).inserted_id
+                    print "Successful"
+                else:
+                    print "data already exists in DB"
+                return output_id
+            except errors.ConnectionFailure as e:
+                print "Something went wrong: " % e
+                return e
+        else:
+            return errno.EINVAL
+
+    def is_in_database(self, list_of_arguments):
+        if type(list_of_arguments) is (list or dict):
+            element = self.db.scrapper.find_one({'frase': list_of_arguments})
+            return element is not None
+        else:
+            return errno.EINVAL
+
+    def query(self):
+        result = self.db.scrapper.find({},{'_id': False})
+        for x in result:
+            self.query_result.append(x)
+        self.indice = 0
+        return self.query_result
+
+    def next_result(self):
+        print self.indice
+        print len(self.query_result)
+        if self.indice < len(self.query_result):
+            return_value = self.query_result[self.indice]
+            self.indice += 1
+            return return_value
         else:
             return errno.ERANGE
