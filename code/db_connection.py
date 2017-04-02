@@ -13,33 +13,36 @@ class DBConnection:
     def __init__(self):
         self.client = MongoClient(self.mongo_info)
         self.db = self.client[self.db_name]
-        self.collection = self.db[self.db_name]
 
     def save_in_database(self, list_of_arguments):
-        try:
-            output_id = None
-            if not self.is_in_database(list_of_arguments):
-                output_id = self.collection.insert_one({'frase': list_of_arguments}).inserted_id
-                print "Successful"
-            else:
-                print "data already exists in DB"
-            return output_id
-        except errors.ConnectionFailure as e:
-            print "Something went wrong: " % e
-            return e
+        if type(list_of_arguments) is (list or dict):
+            try:
+                output_id = None
+                if not self.is_in_database(list_of_arguments):
+                    output_id = self.db.scrapper.insert_one({'frase': list_of_arguments}).inserted_id
+                    print "Successful"
+                else:
+                    print "data already exists in DB"
+                return output_id
+            except errors.ConnectionFailure as e:
+                print "Something went wrong: " % e
+                return e
+        else:
+            return errno.EINVAL
 
     def is_in_database(self, list_of_arguments):
-        element = self.collection.find_one({'frase': list_of_arguments})
-        return element is not None
+        if type(list_of_arguments) is (list or dict):
+            element = self.db.scrapper.find_one({'frase': list_of_arguments})
+            return element is not None
+        else:
+            return errno.EINVAL
 
-    def query(self, list_of_instructions=None):
-        result = self.collection.find(list_of_instructions, {'_id': False})
+    def query(self):
+        result = self.db.scrapper.find({'_id': False})
         for x in result:
             self.query_result.append(x)
         self.indice = 0
         return self.query_result
-
-
 
     def next_result(self):
         if self.indice < len(self.query_result):
