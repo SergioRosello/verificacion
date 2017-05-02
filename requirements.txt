@@ -4,12 +4,15 @@ Babel==2.3.4
 BeautifulSoup==3.2.1
 beautifulsoup4==4.5.3
 bs4==0.0.1
+click==6.7
 coverage==4.3.4
 docutils==0.13.1
 feedparser==5.2.1
+Flask==0.12.1
 funcsigs==1.0.2
 imagesize==0.7.1
-Jinja2==2.9.5
+itsdangerous==0.24
+Jinja2==2.9.6
 MarkupSafe==1.0
 mock==2.0.0
 mongomock==3.8.0
@@ -23,8 +26,10 @@ pymongo==3.4.0
 pyparsing==2.2.0
 pytz==2016.10
 requests==2.13.0
+selenium==2.53.6
 sentinels==1.0.0
 six==1.10.0
 snowballstemmer==1.2.1
 Sphinx==1.5.3
 Unidecode==0.4.20
+Werkzeug==0.12.1
