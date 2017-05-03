@@ -36,8 +36,6 @@ class TextAnalyzer(object):
         from nltk.corpus import stopwords
         from unidecode import unidecode
         # elimina los signos especiales
-
-        print type(self.text)
         if type(self.text) is not unicode:
             self.text = unicode(self.text,'utf-8','ignore')
 
