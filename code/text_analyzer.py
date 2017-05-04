@@ -3,6 +3,7 @@ import errno
 import re
 import nltk
 import sys
+import unicodedata
 from db_connection import DBConnection
 
 
@@ -19,7 +20,10 @@ class TextAnalyzer(object):
         result_list = []
         for w in sorted(sorted_input, key=sorted_input.get, reverse=True):
             result_list.append(w)
-        return result_list
+        resultado = []
+        resultado.append(result_list)
+        resultado.append(sorted_input)
+        return resultado
 
     def check_input(self):
         if type(self.text) is str:
@@ -32,9 +36,10 @@ class TextAnalyzer(object):
         from nltk.corpus import stopwords
         from unidecode import unidecode
         # elimina los signos especiales
-        text_unicode = unicode(self.text,'utf-8','ignore')
+        if type(self.text) is not unicode:
+            self.text = unicode(self.text,'utf-8','ignore')
 
-        self.text = unidecode(text_unicode)
+        self.text = unidecode(self.text)
         self.text = self.text.lower()
 
         # Borra la puntuacion y devuelve una lista de grupos con las palabras que aparecen en el texto.
@@ -67,6 +72,7 @@ class TextAnalyzer(object):
 if __name__ == "__main__":
     analyzer = TextAnalyzer(sys.argv[1])
     phrase = analyzer.text_analyzer()
-    DBConnection.save_in_database(phrase)
+    dbconnection = DBConnection()
+    dbconnection.save_in_database(phrase[0])
     # DBConnection.query()
     # DBConnection.next_result()
