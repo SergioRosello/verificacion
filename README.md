@@ -15,11 +15,7 @@ Developed in Ubuntu 16.04.
 * Git
 
 ## About the app
-The app is a web scrapper with a front-end that allows the user to introduce a URL.  
-The app then proceeds to parse the content of the URL and creates an ordered list with  
-the word that appears the most and the times it appears. Followed by the remaining words  
- in decreasing order. These results are also uploaded to the database.  
-Every section of the app has been tested with it's respective test. Including continuous integration and development process.
+The app is a web scrapper with a front-end that allows the user to introduce a URL. The app then proceeds to parse the content of the URL and creates an ordered list with the word that appears the most and the times it appears. Followed by the remaining words in decreasing order. These results are also uploaded to the database. Every section of the app has been tested with it's respective test. Including continuous integration and development process.
 ## Setup
 ```
     virtualenv ENV
@@ -38,8 +34,12 @@ You can use this command:
 
 ## Deploying the app
 ```
-python code/application.py
+    python code/application.py
 ```
+##TODO:
+* coverage on all of the scripts
+* Give user feedback when database is down
+* Check BDD scenarios
 
 ## Tests
 ### Unit Tests
