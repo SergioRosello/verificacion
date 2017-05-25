@@ -39,7 +39,6 @@ You can use this command:
 ##TODO:
 * coverage on all of the scripts
 * Give user feedback when database is down
-* Check BDD scenarios
 
 ## Tests
 ### Unit Tests
