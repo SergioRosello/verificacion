@@ -19,7 +19,7 @@ class DBConnection:
             try:
                 output_id = None
                 if not self.is_in_database(list_of_arguments):
-                    output_id = self.db.scrapper.insert_one({'frase': list_of_arguments}).inserted_id
+                    output_id = self.db.scrapper.insert_one({'fecha': list_of_arguments[0], 'frase': list_of_arguments[1]}).inserted_id
                     print "Successful"
                 else:
                     print "data already exists in DB"
@@ -30,9 +30,9 @@ class DBConnection:
         else:
             return errno.EINVAL
 
-    def is_in_database(self, list_of_arguments):
-        if type(list_of_arguments) is (list or dict):
-            element = self.db.scrapper.find_one({'frase': list_of_arguments})
+    def is_in_database(self, date):
+        if type(date) is (str):
+            element = self.db.scrapper.find_one({'fecha': date})
             return element is not None
         else:
             return errno.EINVAL

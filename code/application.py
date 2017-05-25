@@ -2,6 +2,7 @@ from flask import Flask
 from text_analyzer import TextAnalyzer
 from db_connection import DBConnection
 from flask import render_template, request
+from url_scrapper import Scrapper
 
 app = Flask(__name__)
 
@@ -17,8 +18,17 @@ def index():
 
         # get text that the person has entered
         text = request.form['text-box']
+
+        # Scrapping web
+        print 'hola'
+        scrapper = Scrapper(text)
+        scrapper.parse_xml()
+
+
         # text processing
-        analyzer = TextAnalyzer(text)
+        print scrapper.string_of_articles
+        print scrapper.list_of_articles
+        analyzer = TextAnalyzer(scrapper.string_of_articles)
         result = analyzer.text_analyzer()
         phrase = result[1]
         for word in sorted(phrase, key=phrase.get, reverse=True):
