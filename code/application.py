@@ -31,33 +31,95 @@ def index():
 
         if valid_URL:
 
-            # Scrapping web
             scrapper = Scrapper(URL)
-            scrapper.parse_xml()
 
-            # text processing
-            analyzer = TextAnalyzer(scrapper.string_of_articles)
-            result = analyzer.text_analyzer()
-            phrase = result[1]
-            for word in sorted(phrase, key=phrase.get, reverse=True):
-                aux = []
-                aux.append(word)
-                aux.append(phrase[word])
-                results.append(aux)
-
+            # Retrieving Date
+            long_date = str(scrapper.check_date())
+            short_date = long_date.split(' ')
+            short_date = str(short_date[1] + ' ' + short_date[2] + ' ' + short_date[3])
             conn = DBConnection.mongodb_conn()
-            print conn
+
             if conn is not None:
                 try:
                     dbconnection = DBConnection()
-                    dbconnection.save_in_database(result[0])
-                    dbconnection.query()
+                    if dbconnection.check_date_in_db(short_date, long_date):
+                        phrase = dbconnection.get_data_from_database(short_date, long_date)
+
+                        results = phrase
+
+                    else:
+                        # Scrapping web
+                        scrapper.parse_xml()
+
+                        # text processing
+                        analyzer = TextAnalyzer(scrapper.string_of_articles)
+                        result = analyzer.text_analyzer()
+                        phrase = result[1]
+
+                        for word in sorted(phrase, key=phrase.get, reverse=True):
+                            aux = []
+                            aux.append(word)
+                            aux.append(phrase[word])
+                            results.append(aux)
+
+                        if conn is not None:
+                            try:
+                                # Generating dict.
+                                parsed_result = []
+                                parsed_result.append(str(short_date))
+                                parsed_result.append(str(long_date))
+                                parsed_result.append(results)
+
+                                dbconnection = DBConnection()
+
+                                dbconnection.save_in_database(parsed_result)
+                                dbconnection.query()
+                            except ConnectionFailure:
+                                error = "Unable to add item to database."
+                                print error
+                        else:
+                            error = "Database is down."
+                            print error
+
                 except ConnectionFailure:
-                    error = "Unable to add item to database."
+                    error = "Unable to check if item is in database."
                     print error
             else:
-                error = "Database is down."
-                print error
+
+
+                # Scrapping web
+                scrapper.parse_xml()
+
+                # text processing
+                analyzer = TextAnalyzer(scrapper.string_of_articles)
+                result = analyzer.text_analyzer()
+                phrase = result[1]
+                # print phrase
+                for word in sorted(phrase, key=phrase.get, reverse=True):
+                    aux = []
+                    aux.append(word)
+                    aux.append(phrase[word])
+                    results.append(aux)
+
+                if conn is not None:
+                    try:
+                        # Generating dict.
+                        parsed_result = []
+                        parsed_result.append(str(short_date))
+                        parsed_result.append(str(long_date))
+                        parsed_result.append(results)
+
+
+                        dbconnection = DBConnection()
+
+                        dbconnection.save_in_database(parsed_result)
+                        dbconnection.query()
+                    except ConnectionFailure:
+                        error = "Unable to add item to database."
+                        print error
+                else:
+                    error = "Database is down."
+                    print error
 
         else:
             error = 'URL not valid'

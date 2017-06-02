@@ -2,6 +2,7 @@ import pymongo
 from pymongo import errors
 from pymongo import MongoClient
 import errno
+import ast
 
 
 class DBConnection:
@@ -18,11 +19,13 @@ class DBConnection:
         if type(list_of_arguments) is (list or dict):
             try:
                 output_id = None
-                if not self.is_in_database(list_of_arguments):
-                    output_id = self.db.scrapper.insert_one({'fecha': list_of_arguments[0], 'frase': list_of_arguments[1]}).inserted_id
-                    print "Successful"
+
+                if not self.is_in_database(list_of_arguments[0]):
+                    output_id = self.db.scrapper.insert_one({list_of_arguments[0] :{list_of_arguments[1]: list_of_arguments[2]}}).inserted_id
                 else:
-                    print "data already exists in DB"
+                    id = self.db.scrapper.find_one({list_of_arguments[0]: {"$exists": 'true'}}).get('_id')
+                    self.db.scrapper.update({'_id': id}, {'$set': {list_of_arguments[0] + '.' + list_of_arguments[1]: list_of_arguments[2]}})
+
                 return output_id
             except errors.ConnectionFailure as e:
                 print "Something went wrong: " % e
@@ -30,10 +33,11 @@ class DBConnection:
         else:
             return errno.EINVAL
 
-    def is_in_database(self, date):
-        if type(date) is (str):
-            element = self.db.scrapper.find_one({'fecha': date})
-            return element is not None
+    def is_in_database(self, short_date):
+        if type(short_date) is (str):
+            element = self.db.scrapper.find({short_date: {"$exists": 'true'}}).count()
+            print element
+            return element is not 0
         else:
             return errno.EINVAL
 
@@ -53,6 +57,29 @@ class DBConnection:
             return return_value
         else:
             return errno.ERANGE
+
+    def check_date_in_db(self, short_date, long_date):
+        print type(short_date)
+        print type(long_date)
+        if type(short_date) is (str) and type(long_date) is (str):
+            print 'Dentro de check in db -> if'
+            element = self.db.scrapper.find({short_date + '.' + long_date: {"$exists": 'true'}}).count()
+            print element
+            return element is not 0
+        else:
+            return errno.EINVAL
+
+    def get_data_from_database(self, short_date, long_date):
+        if type(short_date) is (str) and type(long_date) is (str):
+            id = self.db.scrapper.find_one({short_date: {"$exists": 'true'}}).get('_id')
+            element = self.db.scrapper.find_one({'_id': id})
+            element = str(element[short_date][long_date])
+            element = ast.literal_eval(element)
+            print element
+            print type(element)
+            return element
+        else:
+            return errno.EINVAL
 
     @staticmethod
     def mongodb_conn():
