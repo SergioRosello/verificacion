@@ -53,3 +53,11 @@ class DBConnection:
             return return_value
         else:
             return errno.ERANGE
+
+    @staticmethod
+    def mongodb_conn():
+        try:
+            return pymongo.MongoClient()
+        except pymongo.errors.ConnectionFailure, e:
+            print "Could not connect to server: %s" % e
+            return None
