@@ -29,13 +29,23 @@ def introduce_string_in_box(step, string):
     login.send_keys(string)
     login.send_keys(Keys.ENTER)
 
-@step('I see the results are "(.*)"')
-def check_results_are_correct(step, phrase):
+@step('I see there are results')
+def check_results_are_correct(step):
     results = world.driver.find_elements_by_tag_name('td')
-    output = []
-    for result in results:
-        output.append(result.text)
-    assert_equals(phrase, unicode(output))
+    if len(results) > 0:
+        result_exists = True
+    else:
+        result_exists = False
+    assert_equals(result_exists, True)
+
+@step('I see there are no results')
+def check_there_are_no_results(step):
+    results = world.driver.find_elements_by_tag_name('td')
+    if len(results) == 0:
+        no_result_exists = True
+    else:
+        no_result_exists = False
+    assert_equals(no_result_exists, True)
 
 @step('I introduce string "(.*)" in the text box and click Reset button')
 def click_reset_button_with_string_in_text_box(step, string):
@@ -58,3 +68,12 @@ def click_reset_button(step):
 def click_submit_button(step):
     submit = world.driver.find_element_by_id('submit')
     submit.click()
+
+@step('I see an error code')
+def check_an_error_code_is_shown(step):
+    error = world.driver.find_element_by_id('error')
+    if error:
+        error_exists = True
+    else:
+        error_exists = False
+    assert(error_exists)

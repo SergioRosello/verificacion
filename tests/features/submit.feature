@@ -7,20 +7,20 @@
 """
 
 Feature: User presses submit button
-  Scenario: User introduces "Hola Hola Hola buenos buenos dias" and clicks on Submit
+  Scenario: User introduces "http://ep00.epimg.net/rss/elpais/portada.xml" and clicks on Submit
     Given I have access to web http://127.0.0.1:5000/
-      And I have the string "Hola Hola Hola buenos buenos dias"
-    When  I introduce string "Hola Hola Hola buenos buenos dias" in the text box and press ENTER
-    Then  I see the results are "[u'hola', u'3', u'buenos', u'2', u'dias', u'1']"
+      And I have the string "http://ep00.epimg.net/rss/elpais/portada.xml"
+    When  I introduce string "http://ep00.epimg.net/rss/elpais/portada.xml" in the text box and press ENTER
+    Then  I see there are results
       And I see the text-box is empty
 
   Scenario: There is a result and user clicks on Submit
     Given I have access to web http://127.0.0.1:5000/
-      And I have the string "Hola Hola Hola buenos buenos dias"
-      And I introduce string "Hola Hola Hola buenos buenos dias" in the text box and press ENTER
-      And I see the results are "[u'hola', u'3', u'buenos', u'2', u'dias', u'1']"
+      And I have the string "http://ep00.epimg.net/rss/elpais/portada.xml"
+      And I introduce string "http://ep00.epimg.net/rss/elpais/portada.xml" in the text box and press ENTER
+      And I see there are results
     When  I click the Submit button
-    Then  I see the results are "[u'hola', u'3', u'buenos', u'2', u'dias', u'1']"
+    Then  I see there are results
 
   Scenario: There is nothing in text-box and user click on Submit
     Given I have access to web http://127.0.0.1:5000/

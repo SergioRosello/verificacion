@@ -25,7 +25,7 @@ class DBConnection:
                 else:
                     id = self.db.scrapper.find_one({list_of_arguments[0]: {"$exists": 'true'}}).get('_id')
                     self.db.scrapper.update({'_id': id}, {'$set': {list_of_arguments[0] + '.' + list_of_arguments[1]: list_of_arguments[2]}})
-
+                    output_id = id
                 return output_id
             except errors.ConnectionFailure as e:
                 print "Something went wrong: " % e
@@ -34,7 +34,7 @@ class DBConnection:
             return errno.EINVAL
 
     def is_in_database(self, short_date):
-        if type(short_date) is (str):
+        if type(short_date) is str:
             element = self.db.scrapper.find({short_date: {"$exists": 'true'}}).count()
             print element
             return element is not 0
@@ -59,9 +59,7 @@ class DBConnection:
             return errno.ERANGE
 
     def check_date_in_db(self, short_date, long_date):
-        print type(short_date)
-        print type(long_date)
-        if type(short_date) is (str) and type(long_date) is (str):
+        if type(short_date) is str and type(long_date) is str:
             element = self.db.scrapper.find({short_date + '.' + long_date: {"$exists": 'true'}}).count()
             return element is not 0
         else:

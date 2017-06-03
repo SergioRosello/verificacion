@@ -80,3 +80,11 @@ After the script has finished, you can use the command below to find out the cov
 ```
     coverage html code/url_scrapper.py
 ```
+### db_connection
+```
+    nosetests --with-coverage tests/tests_db_connection.py --cover-package=code.db_connection --cover-html
+```
+After the script has finished, you can use the command below to find out the coverage percentage and areas where the code hasn't been covered.
+```
+    chromium-browser cover/index.html
+```
