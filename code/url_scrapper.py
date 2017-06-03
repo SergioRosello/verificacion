@@ -24,16 +24,19 @@ class Scrapper:
                 article = article.find('p').text
                 self.list_of_articles.append(article.strip().encode("utf-8"))
                 self.string_of_articles = self.string_of_articles + article.strip().encode("utf-8")
-
+    """
     def save_to_file(self, output_file):
         with open(output_file, "w+") as text_file:
             for x in self.list_of_articles:
                 text_file.write(x)
                 text_file.write('\n')
+    """
 
     def get_rss(self):
         return urllib2.urlopen(self.url).read()
 
+
+"""
 if __name__ == '__main__':
     url = 'http://ep00.epimg.net/rss/elpais/portada.xml'
     print 'Scrapping ' + url
@@ -43,3 +46,4 @@ if __name__ == '__main__':
     print 'Generating output: result.txt'
     scrapper.save_to_file("result.txt")
     update = scrapper.check_date()
+"""

@@ -13,16 +13,14 @@ class TextAnalyzer(object):
         self._text = text
 
     def text_analyzer(self):
-        self.check_input()
-        parsed_input = self.parse_input()
-        sorted_input = self.sort_input(parsed_input)
-        return sorted_input
-
-    def check_input(self):
         if type(self.text) is str:
-            return str(self.text)
+            parsed_input = self.parse_input()
+            sorted_input = self.sort_input(parsed_input)
+            return sorted_input
         else:
             return errno.EINVAL
+
+
 
     def parse_input(self):
         nltk.download("stopwords")
@@ -49,11 +47,6 @@ class TextAnalyzer(object):
         from collections import Counter
         return Counter(words)
 
-    @classmethod
-    def print_result(self, result):
-        for w in sorted(result, key=result.get, reverse=True):
-            print w, result[w]
-
     @property
     def text(self):
         return self._text
@@ -62,6 +55,7 @@ class TextAnalyzer(object):
     def text(self, text):
         self._text = text
 
+"""
 if __name__ == "__main__":
     analyzer = TextAnalyzer(sys.argv[1])
     phrase = analyzer.text_analyzer()
@@ -69,3 +63,4 @@ if __name__ == "__main__":
     dbconnection.save_in_database(phrase[0])
     # DBConnection.query()
     # DBConnection.next_result()
+"""

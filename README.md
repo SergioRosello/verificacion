@@ -62,3 +62,21 @@ While application.py is running:
 ```
     lettuce tests/features
 ```
+
+## Runing coverages
+### text_analyzer
+```
+    coverage run -m tests.tests_text_analyzer
+```
+After the script has finished, you can use the command below to find out the coverage percentage and areas where the code hasn't been covered.
+```
+    coverage html code/text_analyzer.py 
+```
+### url_scrapper
+```
+    coverage run -m tests.test_url_scrapper
+```
+After the script has finished, you can use the command below to find out the coverage percentage and areas where the code hasn't been covered.
+```
+    coverage html code/url_scrapper.py
+```
