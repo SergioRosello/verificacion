@@ -16,14 +16,7 @@ class TextAnalyzer(object):
         self.check_input()
         parsed_input = self.parse_input()
         sorted_input = self.sort_input(parsed_input)
-        # self.print_result(sorted_input)
-        result_list = []
-        for w in sorted(sorted_input, key=sorted_input.get, reverse=True):
-            result_list.append(w)
-        resultado = []
-        resultado.append(result_list)
-        resultado.append(sorted_input)
-        return resultado
+        return sorted_input
 
     def check_input(self):
         if type(self.text) is str:

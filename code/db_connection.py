@@ -62,18 +62,28 @@ class DBConnection:
         print type(short_date)
         print type(long_date)
         if type(short_date) is (str) and type(long_date) is (str):
-            print 'Dentro de check in db -> if'
             element = self.db.scrapper.find({short_date + '.' + long_date: {"$exists": 'true'}}).count()
-            print element
             return element is not 0
         else:
             return errno.EINVAL
 
     def get_data_from_database(self, short_date, long_date):
-        if type(short_date) is (str) and type(long_date) is (str):
+        if type(short_date) is str and type(long_date) is str:
             id = self.db.scrapper.find_one({short_date: {"$exists": 'true'}}).get('_id')
             element = self.db.scrapper.find_one({'_id': id})
             element = str(element[short_date][long_date])
+            element = ast.literal_eval(element)
+            print element
+            print type(element)
+            return element
+        else:
+            return errno.EINVAL
+
+    def get_all_data_of_a_date_from_database(self, date):
+        if type(date) is str:
+            id = self.db.scrapper.find_one({date: {"$exists": 'true'}}).get('_id')
+            element = self.db.scrapper.find_one({'_id': id})
+            element = str(element[date])
             element = ast.literal_eval(element)
             print element
             print type(element)
