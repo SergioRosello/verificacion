@@ -38,9 +38,9 @@ def end(aux):
 def i_have_the_string(step, string):
     print 'hola'
 
-@step('I have access to web localhost:4445')
+@step('I have access to web http://127.0.0.1:5000/')
 def connect_to_web_page(step):
-    world.driver.get("localhost:4445")
+    world.driver.get("http://127.0.0.1:5000/")
 
 @step('I introduce string "(.*)" in the text box and press ENTER')
 def introduce_string_in_box(step, string):
