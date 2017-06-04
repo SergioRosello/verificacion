@@ -1,60 +1,85 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <title>Wordcount</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <style>
-      .container {
-        max-width: 1000px;
-      }
+        .container {
+            max-width: 1000px;
+        }
     </style>
-  </head>
-  <body>
-    <div class="container">
-      <div class="row">
+</head>
+<body>
+<div class="container">
+    <div class="row">
         <div class="col-sm-5 col-sm-offset-1">
-          <h1>Text analyzer</h1>
-          <br>
-          <form role="form" method="POST" action="/">
-            <div class="form-group">
-              <input type="text" name="text-box" class="form-control" id="text-box" placeholder="Enter text to be analyzed... (Max 100 char)" style="max-width: 300px;" maxlength="100">
+            <h1>Text analyzer</h1>
+            <br>
+            <div class="error_container">
+                {% if error %}
+                <div class="alert alert-danger">
+                    <p  id="error">{{ error }}</p>
+                </div>
+                {% endif %}
             </div>
-            <button type="submit" id="submit" class="btn btn-default">Submit</button>
-          </form>
-          <button id="reset" class="btn btn-default">Reset</button>
+            <form role="form" method="POST" action="/">
+                <div class="form-group">
+                    <input type="text" name="text-box" class="form-control" id="text-box"
+                           pattern="http://ep00.epimg.net/rss/+[a-z_]+/+[a-z_]+.xml|[0-9]{1,2}[\s]{1}[a-z]{3}[\s]{1}[0-9]{4}"
+                           placeholder="Enter text to be analyzed... (Max 100 char)" style="max-width: 300px;"
+                           maxlength="100">
+                </div>
+                <button type="submit" id="submit" class="btn btn-default">Submit</button>
+                <button id="reset" class="btn btn-default">Reset</button>
+            </form>
+            <br><br><br>
+            <div class="Information">
+                <p>URL's válidas:</p>
+                <ul>
+                    <li><p>http://ep00.epimg.net/rss/+[a-z_]+/+[a-z_]+.xml</p></li>
+                </ul>
+                <p>Ejemplos de fechas válidas:</p>
+                <ul>
+                    <li><p>13 jun 2014</p></li>
+                    <li><p>3 jun 1994</p></li>
+                    <li><p>03 ago 2014</p></li>
+                </ul>
+            </div>
         </div>
         <div class="col-sm-5 col-sm-offset-1">
-          {% if results %}
+            {% if results %}
             <h2>Frequencies</h2>
             <br>
             <div id="results">
-              <table class="table table-striped" style="max-width: 300px;">
-                <thead>
-                  <tr>
-                    <th>Word</th>
-                    <th>Count</th>
-                  </tr>
-                </thead>
-                {% for result in results%}
-                  <tr>
-                    <td>{{ result[0] }}</td>
-                    <td>{{ result[1] }}</td>
-                  </tr>
-                {% endfor %}
-              </table>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Word</th>
+                        <th>Count</th>
+                    </tr>
+                    </thead>
+                </table>
+                <table class="table table-striped" style="height: 650px; overflow-y:scroll; display:block;">
+                    {% for result in results%}
+                    <tr>
+                        <td style=" width: 190px;">{{ result[0] }}</td>
+                        <td style=" width: 190px;">{{ result[1] }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
             </div>
-          {% endif %}
+            {% endif %}
         </div>
-      </div>
     </div>
-    <br><br>
-    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-    <script>
-      $("#reset").click(function(){
-      $("#text-box").val('');
-      });
-    </script>
-  </body>
+</div>
+<br><br>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<script>
+    $("#reset").click(function () {
+        $("#text-box").val('');
+    });
+</script>
+</body>
 </html>

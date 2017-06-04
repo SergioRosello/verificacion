@@ -6,22 +6,22 @@
 
 Feature: User presses Reset button
   Scenario: There is text in the text-box
-    Given I have access to web http://127.0.0.1:5000/
-    Given I have the string "Hola Hola Hola buenos buenos dias"
+    Given I have access to web http://127.0.0.1:8000/
+      And I have the string "Hola Hola Hola buenos buenos dias"
     When  I introduce string "Hola Hola Hola buenos buenos dias" in the text box and click Reset button
     Then  I see the text-box is empty
 
   Scenario: There is a result and user clicks on Reset
-    Given I have access to web http://127.0.0.1:5000/
-    Given I have the string "Hola Hola Hola buenos buenos dias"
-    When  I introduce string "Hola Hola Hola buenos buenos dias" in the text box and press ENTER
-    Then  I see the results are "[u'hola', u'3', u'buenos', u'2', u'dias', u'1']"
+    Given I have access to web http://127.0.0.1:8000/
+      And I have the string "http://ep00.epimg.net/rss/elpais/portada.xml"
+      And I introduce string "http://ep00.epimg.net/rss/elpais/portada.xml" in the text box and press ENTER
+      And I see there are results
     When  I click the Reset button
-    Then  I see the results are "[u'hola', u'3', u'buenos', u'2', u'dias', u'1']"
+    Then  I see there are results
 
 
   Scenario: There is nothing in text-box and user click on Reset
-    Given I have access to web http://127.0.0.1:5000/
-    Then  I see the text-box is empty
+    Given I have access to web http://127.0.0.1:8000/
+      And I see the text-box is empty
     When  I click the Reset button
     Then  I see the text-box is empty

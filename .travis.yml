@@ -1,0 +1,31 @@
+language: python
+python:
+- '2.7'
+
+install:
+- pip install -r requirements.txt
+
+
+before_script:
+    - "export DISPLAY=:99.0" #set up xvfb, req'd for webdriver/firefox
+    - "sh -e /etc/init.d/xvfb start"
+    - "nohup python code/application.py &"
+    - "sleep 10"
+
+  #- nohup python code/application.py &
+  #- sleep 20
+  # list the processes running
+  #- lsof -Pnl +M -i4
+  # test the web server is running
+  #- curl http://localhost:8000/
+  #- head nohup.out
+
+script:
+  - nosetests tests/tests_text_analyzer.py
+  - nosetests tests/tests_db_connection.py
+  - lettuce tests/features
+deploy:
+  provider: heroku
+  api_key:
+    secure: WBJfKZEtZ9jd7+hf9QHEnVz78bBYQcOrZUQUAJJg/hTR66PTSZE8VtzDChChyq02YygVhlsOLlAVSfTlDdTg8UjphLncPxi3Q29gyclyrYHIfHtyC2N37ThKRGpy94M7T8CE1k8wcNsH8q19wnMqboJfRh7Deu1hNCyn+1ZMJr8orSt/Q2Z4lJ7SBuKyxxqnRYd72cAOcaXFvqYYKRzom7VU6C8JECrW2lSsFFxAK+kNzVRsvKOXSqf+qpH3uhkEbhw/srIUg1IihCEsPqBVwuxbiH7W+l4fg8aQnrXW9bJLT9zvlwHruHQz/uh3wAZCP/XC8eA8zvn83QJSvg/6IIikdN78z5ZENw7DaLX+1SLf0ra/iI8JY3/p8TUoCLXDNa17WF0SwdneYg5lZMPPFGSUBoOaq22Bk1UMzB9/Xn8YKvTE3SMzunLrI/0qEVrUlAR6DWDjU1uOjPyh/c/3ZXXSsSSZ1NG7NhxcCExnJlA4PFkzdtrsLvLPhuKTviPTeR+OjmqpmAwLOARAL+1OVq/Wju970deil/0SEzw6JSpkFm4j9F4g0be6Pf76zVrpgMVYzYfTeQJoN5707z0NrocbxLjIp1eUT89bqXezdD1E692n/beVCiFql4+JvC4MoI3Zv3A4Rn1PVlwoSNeKDy4isfZ+FmTw0+MGkV9VLOU=
+  on: develop

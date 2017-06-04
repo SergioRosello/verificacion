@@ -3,39 +3,59 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from code import application
 from nose.tools import assert_equals
-
+import os
 
 @before.all
 def before_all():
     world.app = application.app.test_client()
-    world.driver = webdriver.Chrome()
 
+    is_travis = 'TRAVIS' in os.environ
+    if is_travis:
+        browser_nm = 'PhantomJS'
+        world.driver = getattr(webdriver, browser_nm)()
+    else:
+        world.driver = webdriver.Chrome()
 
 @after.all
 def end(aux):
     world.driver.close()
+    world.driver.quit()
 
 @step('I have the string "(.*)"')
 def i_have_the_string(step, string):
-    print 'hola'
+    aux = None
 
-@step('I have access to web http://127.0.0.1:5000/')
+@step('I have access to web http://127.0.0.1:8000/')
 def connect_to_web_page(step):
-    world.driver.get("http://127.0.0.1:5000/")
+    world.driver.implicitly_wait(10)
+    world.driver.get("http://localhost:8000/")
+    if not "Wordcount" in world.driver.title:
+        raise Exception("Unable to load page!")
 
 @step('I introduce string "(.*)" in the text box and press ENTER')
 def introduce_string_in_box(step, string):
+    world.driver.implicitly_wait(10)
     login = world.driver.find_element_by_id('text-box')
     login.send_keys(string)
     login.send_keys(Keys.ENTER)
 
-@step('I see the results are "(.*)"')
-def check_results_are_correct(step, phrase):
+@step('I see there are results')
+def check_results_are_correct(step):
     results = world.driver.find_elements_by_tag_name('td')
-    output = []
-    for result in results:
-        output.append(result.text)
-    assert_equals(phrase, unicode(output))
+    if len(results) > 0:
+        result_exists = True
+    else:
+        result_exists = False
+    assert_equals(result_exists, True)
+
+@step('I see there are no results')
+def check_there_are_no_results(step):
+    results = world.driver.find_elements_by_tag_name('td')
+    if len(results) == 0:
+        no_result_exists = True
+    else:
+        no_result_exists = False
+    assert_equals(no_result_exists, True)
 
 @step('I introduce string "(.*)" in the text box and click Reset button')
 def click_reset_button_with_string_in_text_box(step, string):
@@ -58,3 +78,12 @@ def click_reset_button(step):
 def click_submit_button(step):
     submit = world.driver.find_element_by_id('submit')
     submit.click()
+
+@step('I see an error code')
+def check_an_error_code_is_shown(step):
+    error = world.driver.find_element_by_id('error')
+    if error:
+        error_exists = True
+    else:
+        error_exists = False
+    assert(error_exists)
