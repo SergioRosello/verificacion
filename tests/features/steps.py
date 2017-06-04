@@ -4,7 +4,6 @@ from selenium.webdriver.common.keys import Keys
 from code import application
 from nose.tools import assert_equals
 import os
-os.environ['http_proxy'] = ''
 
 
 @before.all
@@ -23,7 +22,7 @@ def before_all():
     }
     username = os.environ['SAUCE_USERNAME']
     key = os.environ['SAUCE_ACCESS_KEY']
-    hub_url = "%s:%s@http://ondemand.saucelabs.com:80" % (username, key)
+    hub_url = "%s:%s@http://127.0.0.1:5000" % (username, key)
     world.driver = webdriver.Remote(
         command_executor='http://%s/wd/hub' % (hub_url),
         desired_capabilities=desired_cap)
