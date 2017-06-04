@@ -6,28 +6,22 @@ from nose.tools import assert_equals
 from sauceclient import SauceClient
 import os
 
-
 @before.all
 def before_all():
-    # world.app = application.app.test_client()
+    world.app = application.app.test_client()
     # world.driver = webdriver.Chrome()
 
-    # This is the only code you need to edit in your existing scripts.
-    # The command_executor tells the test to run on Sauce, while the desired_capabilities
-    # parameter tells us which browsers and OS to spin up.
-    desired_cap = {
-        'platform': "Linux",
-        'browserName': "chrome",
-        'version': "48",
-        'build': os.environ['TRAVIS_BUILD_NUMBER']
-    }
-    username = os.environ['SAUCE_USERNAME']
-    key = os.environ['SAUCE_ACCESS_KEY']
-    sauce = SauceClient(username, key)
-    hub_url = "%s:%s@localhost:4445" % (username, key)
-    world.driver = webdriver.Remote(
-        command_executor='http://%s/wd/hub' % (hub_url),
-        desired_capabilities=desired_cap)
+    """Returns a webdriver instance of the browser specified by the
+    `env_str` arg."""
+
+    env_str = 'SELTEST_BROWSER'
+    try:
+        browser_nm = os.environ[env_str]
+        # os.environ[key] raises a KeyError if the env. var doesn't exist
+    except KeyError:
+        browser_nm = 'PhantomJS'
+    finally:
+        world.driver = getattr(webdriver, browser_nm)()
 
 @after.all
 def end(aux):

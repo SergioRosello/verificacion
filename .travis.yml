@@ -10,7 +10,14 @@ addons:
     secure: travis encrypt SAUCE_ACCESS_KEY
 install:
 - pip install -r requirements.txt
+
+
 before_script:
+    - "export DISPLAY=:99.0" #set up xvfb, req'd for webdriver/firefox
+    - "sh -e /etc/init.d/xvfb start"
+    - "nohup python code/application.py &"
+    - "sleep 10"
+
   #- nohup python code/application.py &
   #- sleep 20
   # list the processes running
@@ -22,7 +29,7 @@ before_script:
 script:
   - nosetests tests/tests_text_analyzer.py
   - nosetests tests/tests_db_connection.py
-  #- lettuce tests/features
+  - lettuce tests/features
 deploy:
   provider: heroku
   api_key:
