@@ -19,8 +19,11 @@ def before_all():
         'browserName': "chrome",
         'version': "31",
     }
+    username = os.environ['SAUCE_USERNAME']
+    key = os.environ['SAUCE_ACCESS_KEY']
+    hub_url = "%s:%s@localhost:5000" % (username, key)
     world.driver = webdriver.Remote(
-        command_executor='http://SAUCE_USERNAME:SAUCE_ACCESS_KEY@ondemand.saucelabs.com:80/wd/hub',
+        command_executor='http://%s/wd/hub' % (hub_url),
         desired_capabilities=desired_cap)
 
 
