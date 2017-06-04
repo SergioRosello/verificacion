@@ -19,6 +19,7 @@ before_script:
   - lsof -Pnl +M -i4
   # test the web server is running
   - curl http://127.0.0.1:5000/
+  - head nohup.out
 
 
 script:
