@@ -8,7 +8,7 @@ import os
 
 @before.all
 def before_all():
-    world.app = application.app.test_client()
+    # world.app = application.app.test_client()
     # world.driver = webdriver.Chrome()
 
     # This is the only code you need to edit in your existing scripts.
@@ -26,7 +26,6 @@ def before_all():
     world.driver = webdriver.Remote(
         command_executor='http://%s/wd/hub' % (hub_url),
         desired_capabilities=desired_cap)
-
 
 @after.all
 def end(aux):
