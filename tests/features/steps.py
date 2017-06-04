@@ -3,25 +3,18 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from code import application
 from nose.tools import assert_equals
-from sauceclient import SauceClient
 import os
 
 @before.all
 def before_all():
     world.app = application.app.test_client()
-    # world.driver = webdriver.Chrome()
 
-    """Returns a webdriver instance of the browser specified by the
-    `env_str` arg."""
-
-    env_str = 'SELTEST_BROWSER'
-    try:
-        browser_nm = os.environ[env_str]
-        # os.environ[key] raises a KeyError if the env. var doesn't exist
-    except KeyError:
+    is_travis = 'TRAVIS' in os.environ
+    if is_travis:
         browser_nm = 'PhantomJS'
-    finally:
         world.driver = getattr(webdriver, browser_nm)()
+    else:
+        world.driver = webdriver.Chrome()
 
 @after.all
 def end(aux):
@@ -30,7 +23,7 @@ def end(aux):
 
 @step('I have the string "(.*)"')
 def i_have_the_string(step, string):
-    print 'hola'
+    aux = None
 
 @step('I have access to web http://127.0.0.1:8000/')
 def connect_to_web_page(step):

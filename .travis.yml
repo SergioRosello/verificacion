@@ -1,13 +1,7 @@
 language: python
 python:
 - '2.7'
-addons:
-  sauce_connect:
-    username: SergioRM
-    #direct_domains: http://localhost:8000/
-    #no_ssl_bump_domains: http://localhost:8000/
-  jwt:
-    secure: travis encrypt SAUCE_ACCESS_KEY
+
 install:
 - pip install -r requirements.txt
 
