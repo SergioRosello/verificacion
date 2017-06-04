@@ -1,4 +1,4 @@
-# Verification
+# Verification [![Build Status](https://travis-ci.org/SergioRosello/verificacion.svg?branch=master)](https://travis-ci.org/SergioRosello/verificacion)
 ## Description
 Project to simulate real-life development of a web app.
 Including unit tests, mock tests, BDD tests and continuous integration and deployment.  
