@@ -159,4 +159,4 @@ def index():
     return render_template('index.html', results=results, error=error)
 
 if __name__ == "__main__":
-    app.run(host='localhost', port=4445)
+    app.run()
