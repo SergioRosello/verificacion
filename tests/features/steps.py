@@ -9,7 +9,7 @@ import os
 @before.all
 def before_all():
     world.app = application.app.test_client()
-    world.driver = webdriver.Chrome()
+    # world.driver = webdriver.Chrome()
 
     # This is the only code you need to edit in your existing scripts.
     # The command_executor tells the test to run on Sauce, while the desired_capabilities
@@ -19,7 +19,7 @@ def before_all():
         'browserName': "chrome",
         'version': "31",
     }
-    driver = webdriver.Remote(
+    world.driver = webdriver.Remote(
         command_executor='http://YOUR_SAUCE_USERNAME:YOUR_SAUCE_ACCESS_KEY@ondemand.saucelabs.com:80/wd/hub',
         desired_capabilities=desired_cap)
 
