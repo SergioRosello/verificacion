@@ -22,7 +22,7 @@ def before_all():
     }
     username = os.environ['SAUCE_USERNAME']
     key = os.environ['SAUCE_ACCESS_KEY']
-    hub_url = "%s:%s@http://127.0.0.1:4445" % (username, key)
+    hub_url = "%s:%s@http://localhost:4445" % (username, key)
     world.driver = webdriver.Remote(
         command_executor='http://%s/wd/hub' % (hub_url),
         desired_capabilities=desired_cap)
