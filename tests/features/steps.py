@@ -17,8 +17,8 @@ def before_all():
     # parameter tells us which browsers and OS to spin up.
     desired_cap = {
         'platform': "Linux",
-        'browserName': "chrome",
-        'version': "48",
+        'browserName': "firefox",
+        'version': "45",
         'build': os.environ['TRAVIS_BUILD_NUMBER']
     }
     username = os.environ['SAUCE_USERNAME']
