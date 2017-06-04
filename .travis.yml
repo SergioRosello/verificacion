@@ -4,8 +4,8 @@ python:
 addons:
   sauce_connect:
   username: SergioRM
-  direct_domains: http://localhost:8000/
-  no_ssl_bump_domains: http://localhost:8000/
+  direct_domains: localhost:8000
+  no_ssl_bump_domains: localhost:8000
   jwt:
     secure: travis encrypt SAUCE_ACCESS_KEY
 install:
