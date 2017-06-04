@@ -41,8 +41,8 @@ def i_have_the_string(step, string):
 @step('I have access to web http://127.0.0.1:5000/')
 def connect_to_web_page(step):
     world.driver.implicitly_wait(10)
-    world.driver.get("http://127.0.0.1:5000/")
-    if not "Wordcount" in world.driver.title:
+    world.driver.get("http://www.google.com")
+    if not "Google" in world.driver.title:
         raise Exception("Unable to load google page!")
 
 @step('I introduce string "(.*)" in the text box and press ENTER')
