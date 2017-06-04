@@ -4,6 +4,7 @@ from selenium.webdriver.common.keys import Keys
 from code import application
 from nose.tools import assert_equals
 import os
+os.environ['http_proxy'] = ''
 
 
 @before.all
