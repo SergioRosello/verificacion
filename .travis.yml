@@ -12,7 +12,14 @@ install:
   - pip install -r requirements.txt
 
 before_script:
-  - nohup python code/application.py &>/dev/null &
+  - nohup python code/application.py &
+
+  - sleep 20
+  # list the processes running
+  - lsof -Pnl +M -i4
+  # test the web server is running
+  - curl http://localhost:
+
 
 script:
   - nosetests tests/tests_text_analyzer.py
