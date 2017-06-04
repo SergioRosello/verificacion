@@ -17,7 +17,7 @@ def before_all():
     desired_cap = {
         'platform': "Linux",
         'browserName': "chrome",
-        'version': "31",
+        'version': "48",
         'build': os.environ['TRAVIS_BUILD_NUMBER']
     }
     username = os.environ['SAUCE_USERNAME']
