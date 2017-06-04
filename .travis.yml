@@ -17,5 +17,5 @@ install:
 
 script:
   nosetests tests/tests_text_analyzer.py
-  nosetests tests/tests_db_connection.py
+  # nosetests tests/tests_db_connection.py
   # lettuce tests/features
