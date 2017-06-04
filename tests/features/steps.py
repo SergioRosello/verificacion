@@ -42,6 +42,7 @@ def connect_to_web_page(step):
 
 @step('I introduce string "(.*)" in the text box and press ENTER')
 def introduce_string_in_box(step, string):
+    world.driver.implicitly_wait(10)
     login = world.driver.find_element_by_id('text-box')
     login.send_keys(string)
     login.send_keys(Keys.ENTER)
