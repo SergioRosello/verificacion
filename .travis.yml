@@ -18,7 +18,7 @@ before_script:
   # list the processes running
   - lsof -Pnl +M -i4
   # test the web server is running
-  - curl http://localhost:
+  - curl http://127.0.0.1:5000/
 
 
 script:
