@@ -12,6 +12,8 @@ install:
   - pip install -r requirements.txt
 
 before_script:
+  - export SAUCE_USERNAME=SergioRM
+  - export SAUCE_ACCESS_KEY=1f256b16-d392-439f-9cec-899ca4666f74
   - nohup python code/application.py &>/dev/null &
 
 script:

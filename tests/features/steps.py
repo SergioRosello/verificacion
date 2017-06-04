@@ -3,6 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from code import application
 from nose.tools import assert_equals
+import os
 
 
 @before.all
@@ -10,10 +11,23 @@ def before_all():
     world.app = application.app.test_client()
     world.driver = webdriver.Chrome()
 
+    # This is the only code you need to edit in your existing scripts.
+    # The command_executor tells the test to run on Sauce, while the desired_capabilities
+    # parameter tells us which browsers and OS to spin up.
+    desired_cap = {
+        'platform': "Linux",
+        'browserName': "chrome",
+        'version': "31",
+    }
+    driver = webdriver.Remote(
+        command_executor='http://YOUR_SAUCE_USERNAME:YOUR_SAUCE_ACCESS_KEY@ondemand.saucelabs.com:80/wd/hub',
+        desired_capabilities=desired_cap)
+
 
 @after.all
 def end(aux):
     world.driver.close()
+    world.driver.quit()
 
 @step('I have the string "(.*)"')
 def i_have_the_string(step, string):
