@@ -17,8 +17,8 @@ def before_all():
     # parameter tells us which browsers and OS to spin up.
     desired_cap = {
         'platform': "Linux",
-        'browserName': "firefox",
-        'version': "45",
+        'browserName': "chrome",
+        'version': "48",
         'build': os.environ['TRAVIS_BUILD_NUMBER']
     }
     username = os.environ['SAUCE_USERNAME']
@@ -41,7 +41,7 @@ def i_have_the_string(step, string):
 @step('I have access to web http://127.0.0.1:5000/')
 def connect_to_web_page(step):
     world.driver.implicitly_wait(10)
-    world.driver.get("http://localhost:5000/")
+    world.driver.get("http://localhost:8000/")
     if not "Wordcount" in world.driver.title:
         raise Exception("Unable to load page!")
 

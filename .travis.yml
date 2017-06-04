@@ -2,16 +2,24 @@ language: python
 python:
 - '2.7'
 addons:
-  sauce_connect:
-    username: SergioRM
+  sauce_connect: true
   jwt:
     secure: travis encrypt SAUCE_ACCESS_KEY
 install:
 - pip install -r requirements.txt
-before_script: 
+before_script:
+  - nohup python code/application.py &
+  - sleep 20
+  # list the processes running
+  - lsof -Pnl +M -i4
+  # test the web server is running
+  - curl http://localhost:8000/
+  - head nohup.out
+
 script:
-- nosetests tests/tests_text_analyzer.py
-- nosetests tests/tests_db_connection.py
+  - nosetests tests/tests_text_analyzer.py
+  - nosetests tests/tests_db_connection.py
+  - lettuce tests/features
 deploy:
   provider: heroku
   api_key:
