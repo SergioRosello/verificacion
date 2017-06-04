@@ -1,0 +1,27 @@
+language: python
+python:
+  - "2.7"
+
+  # PyPy versions
+  - "pypy"  # PyPy2 2.5.0
+  - "pypy3" # Pypy3 2.4.0
+  - "pypy-5.3.1"
+# command to install dependencies
+
+addons:
+  chrome: stable
+
+before_install:
+  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=5000 http://127.0.0.1/
+
+install:
+  - pip install -r requirements.txt
+# command to run tests
+
+before_script:
+  python code/application.py
+
+script:
+  nosetests tests/tests_text_analyzer.py
+  nosetests tests/tests_db_connection.py
+  lettuce tests/features
