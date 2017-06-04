@@ -20,7 +20,7 @@ def before_all():
         'version': "31",
     }
     world.driver = webdriver.Remote(
-        command_executor='http://YOUR_SAUCE_USERNAME:YOUR_SAUCE_ACCESS_KEY@ondemand.saucelabs.com:80/wd/hub',
+        command_executor='http://SAUCE_USERNAME:SAUCE_ACCESS_KEY@ondemand.saucelabs.com:80/wd/hub',
         desired_capabilities=desired_cap)
 
 
