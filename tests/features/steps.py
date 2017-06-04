@@ -24,7 +24,7 @@ def before_all():
     username = os.environ['SAUCE_USERNAME']
     key = os.environ['SAUCE_ACCESS_KEY']
     sauce = SauceClient(username, key)
-    hub_url = "%s:%s@londemand.saucelabs.com:80" % (username, key)
+    hub_url = "%s:%s@localhost:4445" % (username, key)
     world.driver = webdriver.Remote(
         command_executor='http://%s/wd/hub' % (hub_url),
         desired_capabilities=desired_cap)
@@ -38,7 +38,7 @@ def end(aux):
 def i_have_the_string(step, string):
     print 'hola'
 
-@step('I have access to web http://127.0.0.1:5000/')
+@step('I have access to web http://127.0.0.1:8000/')
 def connect_to_web_page(step):
     world.driver.implicitly_wait(10)
     world.driver.get("http://localhost:8000/")

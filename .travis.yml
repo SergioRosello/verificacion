@@ -4,25 +4,25 @@ python:
 addons:
   sauce_connect:
     username: SergioRM
-    direct_domains: http://localhost:8000/
-    no_ssl_bump_domains: http://localhost:8000/
+    #direct_domains: http://localhost:8000/
+    #no_ssl_bump_domains: http://localhost:8000/
   jwt:
     secure: travis encrypt SAUCE_ACCESS_KEY
 install:
 - pip install -r requirements.txt
 before_script:
-  - nohup python code/application.py &
-  - sleep 20
+  #- nohup python code/application.py &
+  #- sleep 20
   # list the processes running
-  - lsof -Pnl +M -i4
+  #- lsof -Pnl +M -i4
   # test the web server is running
-  - curl http://localhost:8000/
-  - head nohup.out
+  #- curl http://localhost:8000/
+  #- head nohup.out
 
 script:
   - nosetests tests/tests_text_analyzer.py
   - nosetests tests/tests_db_connection.py
-  - lettuce tests/features
+  #- lettuce tests/features
 deploy:
   provider: heroku
   api_key:
