@@ -9,7 +9,6 @@ Developed in Ubuntu 16.04.
 * MongoDB
 * Lettuce
 * Selenium web driver
-* Jenkins
 * HTML5
 * Bootstrap
 * Git
