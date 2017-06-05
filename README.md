@@ -17,7 +17,7 @@ Developed in Ubuntu 16.04.
 * Heroku
 
 ## About the app
-#####Preview: https://verificacion.herokuapp.com/ (MongoDB not connected)
+__Preview: https://verificacion.herokuapp.com/ (MongoDB not connected)__
 The app is a web scrapper with a front-end that allows the user to introduce a URL. The app then proceeds to parse the content of the URL and creates an ordered list with the word that appears the most and the times it appears. Followed by the remaining words in decreasing order. These results are also uploaded to the database. Every section of the app has been tested with it's respective test. Including continuous integration and development process.
 
 ## Setup
