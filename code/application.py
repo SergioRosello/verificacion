@@ -69,7 +69,8 @@ def index():
             date = str(date[0] + ' ' + date[1] + ' ' + date[2])
             print date
 
-            conn = DBConnection.mongodb_conn()
+            dbconnection = DBConnection()
+            conn = dbconnection.mongodb_conn()
 
             if conn is not None:
                 dbconnection = DBConnection()
@@ -103,7 +104,8 @@ def index():
                 long_date = str(scrapper.check_date())
                 short_date = long_date.split(' ')
                 short_date = str(short_date[1] + ' ' + short_date[2].lower() + ' ' + short_date[3])
-                conn = DBConnection.mongodb_conn()
+                dbconnection = DBConnection()
+                conn = dbconnection.mongodb_conn()
 
                 if conn is not None:
                     dbconnection = DBConnection()

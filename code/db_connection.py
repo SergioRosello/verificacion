@@ -12,7 +12,7 @@ class DBConnection:
     indice = 0
 
     def __init__(self):
-        self.client = MongoClient(self.mongo_info)
+        self.client = MongoClient(self.mongo_info, serverSelectionTimeoutMS=5000)
         self.db = self.client[self.db_name]
 
     def save_in_database(self, list_of_arguments):
@@ -89,14 +89,12 @@ class DBConnection:
         else:
             return errno.EINVAL
 
-    @staticmethod
-    def mongodb_conn():
+    def mongodb_conn(self):
         try:
-            client = pymongo.MongoClient("someInvalidURIOrNonExistantHost",
-                                         serverSelectionTimeoutMS=8)
-            client.server_info()  # force connection on a request as the
+            self.client.server_info()  # force connection on a request as the
             # connect=True parameter of MongoClient seems
             # to be useless here
+            return 1
         except pymongo.errors.ServerSelectionTimeoutError as err:
             print "Could not connect to server: %s" % err
             # do whatever you need
