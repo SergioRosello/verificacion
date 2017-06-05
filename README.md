@@ -13,9 +13,13 @@ Developed in Ubuntu 16.04.
 * HTML5
 * Bootstrap
 * Git
+* Travis ci
+* Heroku
 
 ## About the app
+#####Preview: https://verificacion.herokuapp.com/ (MongoDB not connected)
 The app is a web scrapper with a front-end that allows the user to introduce a URL. The app then proceeds to parse the content of the URL and creates an ordered list with the word that appears the most and the times it appears. Followed by the remaining words in decreasing order. These results are also uploaded to the database. Every section of the app has been tested with it's respective test. Including continuous integration and development process.
+
 ## Setup
 ```
     virtualenv ENV
@@ -36,15 +40,13 @@ You can use this command:
 ```
     python code/application.py
 ```
-##TODO:
-* coverage on all of the scripts
-* Give user feedback when database is down
 
 ## Tests
 ### Unit Tests
 In the root directory:
 ```
     nosetests tests/tests_text_analyzer.py
+    nosetests tests/test_url_scrapper.py
 ```
 ### Mock tests
 In the root directory (If MongoDB is installed in your machine):

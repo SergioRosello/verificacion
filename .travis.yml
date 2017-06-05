@@ -23,7 +23,17 @@ before_script:
 script:
   - nosetests tests/tests_text_analyzer.py
   - nosetests tests/tests_db_connection.py
+  - nosetests tests/test_url_scrapper.py
   - lettuce tests/features
+
+after_success:
+  - git checkout develop
+  - git pull
+  - git checkout master
+  - git pull origin master
+  - git merge develop
+  - git push origin master
+
 deploy:
   provider: heroku
   api_key:

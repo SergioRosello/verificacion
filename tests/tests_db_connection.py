@@ -96,6 +96,9 @@ class TestsDBConnection(TestCase):
         expected_result = errno.ERANGE
         self.assertEqual(result, expected_result)
 
+    def test_mongodb_conn(self):
+        self.assertTrue(self.dbconnection.mongodb_conn())
+
     def test_save_in_database_argument_is_str(self):
         self.assertEqual(self.dbconnection.save_in_database('hola'), errno.EINVAL)
 
