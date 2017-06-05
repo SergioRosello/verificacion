@@ -92,7 +92,13 @@ class DBConnection:
     @staticmethod
     def mongodb_conn():
         try:
-            return pymongo.MongoClient()
-        except pymongo.errors.ConnectionFailure, e:
-            print "Could not connect to server: %s" % e
+            client = pymongo.MongoClient("someInvalidURIOrNonExistantHost",
+                                         serverSelectionTimeoutMS=8)
+            client.server_info()  # force connection on a request as the
+            # connect=True parameter of MongoClient seems
+            # to be useless here
+        except pymongo.errors.ServerSelectionTimeoutError as err:
+            print "Could not connect to server: %s" % err
+            # do whatever you need
             return None
+
