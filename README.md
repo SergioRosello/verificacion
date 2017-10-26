@@ -5,6 +5,7 @@ Including unit tests, mock tests, BDD tests and continuous integration and deplo
 Developed in Ubuntu 16.04.
 ## Technologies used
 * Python 2.7
+* Flask
 * VirtualENV
 * MongoDB
 * Lettuce
